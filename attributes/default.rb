@@ -4,6 +4,10 @@
 default['arma3']['steam_user'] = "changeme"
 default['arma3']['steam_password'] = "changeme"
 
+# Location to install the game (application-specific directory
+# will be created under here.
+default['arma3']['install_base'] = "/usr/local/games"
+
 #
 # Arma 3 Server configuration (server.cfg) attributes
 #
