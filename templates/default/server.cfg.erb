@@ -11,7 +11,7 @@ logFile = "<%= node['arma3']['log_file'] %>";
  
  
 motd[] = {
-<%- node['arma']['motd'].each do |msg| -%>
+<%- node['arma3']['motd'].each do |msg| -%>
           "<%= msg %>",
 <%- end -%>
 };
@@ -36,10 +36,25 @@ vonCodecQuality = <%= node['arma3']['von_codec_quality'] %>;
 persistent = <%= node['arma3']['persistent'] %>;	
 timeStampFormat = "<%= node['arma3']['timestamp_format'] %>";
 BattlEye = <%= node['arma3']['battleye'] %>;
-allowedLoadFileExtensions[] = {<%= node['arma3']['allowed_load_file_extensions'].join("\",\"") %>};
-allowedPreprocessFileExtensions[] = {<%= node['arma3']['allowed_preprocess_file_extensions'].join("\",\"") %>}; 
-allowedHTMLLoadExtensions[] = {<%= node['arma3']['allowed_html_load_extensions'].join("\",\"") %>};
- 
+
+<%- if node['arma3']['allowed_load_file_extensions'].nil? -%>
+allowedLoadFileExtensions[] = {};
+<%- else -%>
+allowedLoadFileExtensions[] = {"<%= node['arma3']['allowed_load_file_extensions'].join("\",\"") %>"};
+<%- end -%>
+
+
+<%- if node['arma3']['allowed_preprocess_file_extensions'].nil? -%>
+allowedPreprocessFileExtensions[] = {};
+<%- else -%>
+allowedPreprocessFileExtensions[] = {"<%= node['arma3']['allowed_preprocess_file_extensions'].join("\",\"") %>"};
+<%- end -%>
+
+<%- if node['arma3']['allowed_html_load_extensions'].nil? -%>
+allowedHTMLLoadExtensions[] = {};
+<%- else -%>
+allowedHTMLLoadExtensions[] = {"<%= node['arma3']['allowed_html_load_extensions'].join("\",\"") %>"};
+<%- end -%>
  
 // SCRIPTING ISSUES
 onUserConnected = "<%= node['arma3']['on_user_connected'] %>";
