@@ -1,0 +1,59 @@
+//
+// server.cfg - generated automatically by Chef
+//
+ 
+ 
+// GLOBAL SETTINGS
+hostname = "<%= node['arma3']['hostname'] %>";
+password = "<%= node['arma3']['password'] %>";
+passwordAdmin = "<%= node['arma3']['password_admin'] %>";
+logFile = "<%= node['arma3']['log_file'] %>";
+ 
+ 
+motd[] = {
+<%- node['arma']['motd'].each do |msg| -%>
+          "<%= msg %>",
+<%- end -%>
+};
+motdInterval = <%= node['arma3']['motd_interval'] %>;
+ 
+// JOINING RULES
+checkfiles[] = {};				// Outdated.
+maxPlayers = <%= node['arma3']['max_players'] %>;
+kickDuplicate = <%= node['arma3']['kick_duplicate'] %>;
+verifySignatures = <%= node['arma3']['verify_signatures'] %>;
+equalModRequired = 0;				// Outdated. If set to 1, player has to use exactly the same -mod= startup parameter as the server.
+//requiredBuild = 12345				// Require clients joining to have at least build 12345 of game, preventing obsolete clients to connect
+ 
+ 
+// VOTING
+voteMissionPlayers = <%= node['arma3']['vote_mission_players'] %>;
+voteThreshold = <%= node['arma3']['vote_threshold'] %>;
+ 
+// INGAME SETTINGS
+disableVoN = <%= node['arma3']['disable_von'] %>;	
+vonCodecQuality = <%= node['arma3']['von_codec_quality'] %>;
+persistent = <%= node['arma3']['persistent'] %>;	
+timeStampFormat = "<%= node['arma3']['timestamp_format'] %>";
+BattlEye = <%= node['arma3']['battleye'] %>;
+allowedLoadFileExtensions[] = {<%= node['arma3']['allowed_load_file_extensions'].join("\",\"") %>};
+allowedPreprocessFileExtensions[] = {<%= node['arma3']['allowed_preprocess_file_extensions'].join("\",\"") %>}; 
+allowedHTMLLoadExtensions[] = {<%= node['arma3']['allowed_html_load_extensions'].join("\",\"") %>};
+ 
+ 
+// SCRIPTING ISSUES
+onUserConnected = "<%= node['arma3']['on_user_connected'] %>";
+onUserDisconnected = "<%= node['arma3']['on_user_disconnected'] %>";
+doubleIdDetected = ""<%= node['arma3']['double_id_detected'] %>;
+//regularCheck = "{}";				//  Server checks files from time to time by hashing them and comparing the hash to the hash values of the clients. //deprecated
+ 
+// SIGNATURE VERIFICATION
+onUnsignedData = "<%= node['arma3']['on_unsigned_data'] %>";
+onHackedData = "<%= node['arma3']['on_hacked_data'] %>";
+onDifferentData = "<%= node['arma3']['on_different_data'] %>";
+ 
+ 
+// MISSIONS CYCLE (see below)
+class Missions {};				// An empty Missions class means there will be no mission rotation
+ 
+missionWhitelist[] = {}; //an empty whitelist means there is no restriction on what missions' available
