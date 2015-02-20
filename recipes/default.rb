@@ -39,3 +39,16 @@ end
 
 end
 
+# Add startup script
+template "/etc/init.d/arma3server" do
+  source "arma3server.sh.erb"
+  owner "root"
+  group "root"
+  mode "0755"
+end
+
+# Start service
+service "arma3server" do
+  action :start
+end
+
