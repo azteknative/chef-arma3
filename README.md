@@ -1,6 +1,10 @@
 # arma3-cookbook
 
-Installs and configures the Arma 3 dedicated server
+Installs and configures the Arma 3 dedicated server.
+
+## Dependencies
+
+* steamcmd cookbook - https://github.com/azteknative/steamcmd
 
 ## Supported Platforms
 
