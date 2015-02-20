@@ -1,10 +1,12 @@
 # arma3-cookbook
 
-TODO: Enter the cookbook description here.
+Installs and configures the Arma 3 dedicated server
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+Currently only tested with:
+
+* Ubuntu 14.04
 
 ## Attributes
 
@@ -16,10 +18,16 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['arma3']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['arma3']['steam_user']</tt></td>
+    <td>String</td>
+    <td>User to log into Steam with.</td>
+    <td><tt>changme</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['arma3']['steam_password']</tt></td>
+    <td>String</td>
+    <td>Password to log into Steam with.</td>
+    <td><tt>changme</tt></td>
   </tr>
 </table>
 
@@ -27,15 +35,25 @@ TODO: List your supported platforms.
 
 ### arma3::default
 
-Include `arma3` in your node's `run_list`:
+Include `arma3` in your node's `run_list`, and override the
+`['arma3']['steam_user']` and `['arma3']['steam_password']`
+with credentials from a valid Steam account:
 
 ```json
 {
+  "arma3" : {
+    "steam_user": "exampleuser",
+    "steam_password": "examplepass"
+  },
   "run_list": [
     "recipe[arma3::default]"
   ]
 }
 ```
+
+NB: the Steam account *doesn't* have to own a copy of Arma 3. The
+dedicated server is a free utility, so you can (and should) create
+a separate account to host a dedicated server.
 
 ## License and Authors
 
