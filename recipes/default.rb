@@ -24,3 +24,18 @@ template "#{node['arma3']['install_base']}/arma3_ds/server.cfg" do
   mode "0644"
 end
 
+# Create additional configuration dirs required
+%{ ".local"
+   ".local/share"
+   ".local/share/Arma 3"
+   ".local/share/Arma 3 - Other Profiles" }.each do |dir|
+
+  directory "/home/#{node['steamcmd']['user']}/#{dir}" do
+    action :create
+    owner node['steamcmd']['user']
+    group node['steamcmd']['group']
+    mode "0755"
+  end
+
+end
+
