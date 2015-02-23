@@ -9,6 +9,18 @@
 
 include_recipe "steamcmd"
 
+packages = value_for_platform(  
+  [ 'ubuntu', 'debian' ]  => {
+    'default' => [ 'p7zip-full' ]
+  },
+  [ 'centos', 'fedora' ] => {
+    'default' => [ 'p7zip', 'p7zip-plugins']
+  })
+
+packages.each do |p|
+  package p
+end
+
 steamcmd_app "arma3_ds" do
   action :install
   app_id 233780
