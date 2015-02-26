@@ -39,7 +39,7 @@ action :install do
 EOT
   end
 
-  #new_resource.updated_by_last_action(true)
+  new_resource.updated_by_last_action(true)
 
 end
 
