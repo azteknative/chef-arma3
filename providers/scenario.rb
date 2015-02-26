@@ -1,4 +1,8 @@
 
+def whyrun_supported?
+  true
+end
+
 action :install do
 
   add_scenario
