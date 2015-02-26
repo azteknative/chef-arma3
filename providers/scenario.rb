@@ -5,10 +5,13 @@ end
 
 action :install do
 
-  converge_by("Add scenario #{@new_resource}") do
-    add_scenario
+  if @current_resource.exists?
+    Chef::Log.info "Scenario #{@new_resource} already exists - nothing to do."
+  else
+    converge_by("Add scenario #{@new_resource}") do
+      add_scenario
+    end
   end
-
 end
 
 def add_scenario
