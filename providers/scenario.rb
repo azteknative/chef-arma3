@@ -15,8 +15,7 @@ action :install do
 end
 
 def add_scenario
-  download_scenario 
-  extract_scenario
+  download_and_extract
 
   # Copy extracted file(s) to mpmissions directory
   bash "copy-scenario" do
@@ -36,7 +35,7 @@ EOT
   end
 end
 
-def download_scenario
+def download_and_extract
   # Work out the extension of the scenario archive
   file_extension=new_resource.url.split('.').last
 
@@ -44,9 +43,7 @@ def download_scenario
   remote_file "#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}.#{file_extension}" do
     source new_resource.url
   end
-end
 
-def extract_scenario
   # Create directory to store archive contents
   directory "#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}" do
     action :create
@@ -73,8 +70,7 @@ end
 
 def scenario_exists?
 
-  download_scenario
-  extract_scenario
+  download_and_extract
 
   # Check each extracted file
   Dir.entries("#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}").each do |f|
