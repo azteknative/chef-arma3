@@ -1,7 +1,13 @@
 
 action :install do
 
+  add_scenario
 
+  new_resource.updated_by_last_action(true)
+
+end
+
+def add_scenario
   # Work out the extension of the scenario archive
   file_extension=new_resource.url.split('.').last
 
@@ -38,8 +44,5 @@ action :install do
       done
 EOT
   end
-
-  new_resource.updated_by_last_action(true)
-
 end
 
