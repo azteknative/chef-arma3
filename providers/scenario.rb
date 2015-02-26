@@ -9,8 +9,6 @@ action :install do
     add_scenario
   end
 
-  new_resource.updated_by_last_action(true)
-
 end
 
 def add_scenario
