@@ -29,11 +29,18 @@ steamcmd_app "arma3_ds" do
   base_path node['arma3']['install_base']
 end
 
+# Define service
+service "arma3server" do
+  action :nothing
+  supports :start => true, :stop => true, :restart => true, :status => false
+end
+
 template "#{node['arma3']['install_base']}/arma3_ds/server.cfg" do
   source "server.cfg.erb"
   owner node['steamcmd']['user']
   group node['steamcmd']['group']
   mode "0644"
+  notifies :restart, "service[arma3server]", :delayed
 end
 
 # Create additional configuration dirs required
@@ -59,8 +66,4 @@ template "/etc/init.d/arma3server" do
   mode "0755"
 end
 
-# Start service
-service "arma3server" do
-  action :start
-end
 
