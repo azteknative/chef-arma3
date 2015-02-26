@@ -5,7 +5,9 @@ end
 
 action :install do
 
-  add_scenario
+  converge_by("Add scenario #{@new_resource}") do
+    add_scenario
+  end
 
   new_resource.updated_by_last_action(true)
 
