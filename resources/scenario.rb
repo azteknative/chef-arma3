@@ -7,3 +7,5 @@ attribute :scenario_title, :name_attribute => true, :kind_of => String,
 
 attribute :url, :kind_of => String, :default => nil, :required => true
 
+attr_accessor :exists
+
