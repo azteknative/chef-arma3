@@ -5,7 +5,7 @@ end
 
 action :install do
 
-  if @current_resource.exists?
+  if @current_resource.exists
     Chef::Log.info "Scenario #{@new_resource} already exists - nothing to do."
   else
     converge_by("Add scenario #{@new_resource}") do
@@ -15,7 +15,7 @@ action :install do
 end
 
 def add_scenario
-  download_and_extract
+  download_and_extract(@new_resource.url, @new_resource.scenario_title)
 
   # Copy extracted file(s) to mpmissions directory
   bash "copy-scenario" do
@@ -35,25 +35,26 @@ EOT
   end
 end
 
-def download_and_extract
+def download_and_extract(url, title)
+  Chef::Log.info "Downloading #{title} from #{url}..."
   # Work out the extension of the scenario archive
-  file_extension=new_resource.url.split('.').last
+  file_extension=url.split('.').last
 
   # Retrieve the file
-  remote_file "#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}.#{file_extension}" do
-    source new_resource.url
+  remote_file "#{Chef::Config[:file_cache_path]}/#{title}.#{file_extension}" do
+    source url
   end
 
   # Create directory to store archive contents
-  directory "#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}" do
+  directory "#{Chef::Config[:file_cache_path]}/#{title}" do
     action :create
   end
 
   # Extract the archive
   bash "extract-scenario" do
-    cwd "#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}"
-    code "7za x ../#{new_resource.scenario_title}.#{file_extension}"
-    only_if { Dir.entries("#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}").length == 2 }
+    cwd "#{Chef::Config[:file_cache_path]}/#{title}"
+    code "7za x ../#{title}.#{file_extension}"
+    only_if { Dir.entries("#{Chef::Config[:file_cache_path]}/#{title}").length == 2 }
   end
 end
 
@@ -63,23 +64,25 @@ def load_current_resource
   @current_resource.scenario_title(@new_resource.scenario_title)
   @current_resource.url(@new_resource.url)
 
-  if scenario_exists?(@current_resource.scenario_name)
+  if scenario_exists?(@current_resource.url, @current_resource.scenario_title)
     @current_resource.exists = true
   end
+
+  @current_resource
 end
 
-def scenario_exists?
+def scenario_exists?(url, title)
 
-  download_and_extract
+  Chef::Log.info "Checking existance of #{title} from #{url}..."
+
+  download_and_extract(url, title)
 
   # Check each extracted file
-  Dir.entries("#{Chef::Config[:file_cache_path]}/#{new_resource.scenario_title}").each do |f|
+  ::Dir.entries("#{Chef::Config[:file_cache_path]}/#{title}").each do |f|
     # Ignore special files (this and parent dirs)
     unless f == '.' || f == '..'
       # If any one file doens't exist in the missions directory, we return false
-      unless File.exists?("#{node['arma3']['install_base']}/arma3_ds/mpmissions#{f}")
-        return false
-      end
+      return false unless ::File.exist?("#{node['arma3']['install_base']}/arma3_ds/mpmissions/#{f}")
     end
   end
 
