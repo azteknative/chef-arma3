@@ -1,7 +1,7 @@
 #
 # Credentials needed to download and install the Arma 3 DS
 #
-default['arma3']['steam_user'] = "changeme"
+default['arma3']['steam_username'] = "changeme"
 default['arma3']['steam_password'] = "changeme"
 
 # Location to install the game (application-specific directory
