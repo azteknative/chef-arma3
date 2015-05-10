@@ -12,7 +12,7 @@ include_recipe "steamcmd"
 steamcmd_app "arma3_ds" do
   action :install
   app_id 233780
-  steam_user node['arma3']['steam_user']
+  steam_user node['arma3']['steam_username']
   steam_password node['arma3']['steam_password']
   base_path node['arma3']['install_base']
 end
