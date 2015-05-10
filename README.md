@@ -22,7 +22,7 @@ Currently only tested with:
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['arma3']['steam_user']</tt></td>
+    <td><tt>['arma3']['steam_username']</tt></td>
     <td>String</td>
     <td>User to log into Steam with.</td>
     <td><tt>changme</tt></td>
